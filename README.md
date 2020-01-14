@@ -1,8 +1,14 @@
-# shredded
+# Shredded
 
-a workout reviewer and scheduler that you can use to track your workouts
+A workout reviewer and scheduler that you can use to track your workouts. Shredded will help you to make your own workouts and review them as you doing it. You will be able to check which one you did that day and your progress from one exercise to another, including weights and performances.
 
-## How to configure your local environment
+## Techs
+
+1. Flask
+1. Flask-SQLAlchemy
+1. Flask-Migrate
+
+### How to configure your local environment
 
 1. Using virtual environment:
 
