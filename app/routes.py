@@ -7,7 +7,7 @@ def helloworld():
     return "Hello to Schredded"
 
 @app.route('/addworkout', methods=['POST'])
-def add_workout():
+def add_workout():    
     try:
         data = request.get_json()    
         
@@ -33,6 +33,6 @@ def add_workout():
         
         return response
     except Exception as error:
-        response = error
+        response = jsonify(error.message)
         response.status_code = 500
         return response
