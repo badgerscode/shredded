@@ -33,6 +33,6 @@ def add_workout():
         
         return response
     except Exception as error:
-        response = jsonify(error.message)
+        response = jsonify(error)
         response.status_code = 500
         return response
