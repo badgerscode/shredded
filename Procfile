@@ -1,1 +1,1 @@
-web: gunicorn shredded:app
+web: flask db upgrade; gunicorn shredded:app
