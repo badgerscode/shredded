@@ -8,26 +8,31 @@ def helloworld():
 
 @app.route('/addworkout', methods=['POST'])
 def add_workout():
-    data = request.get_json()    
-    
-    workout = Workout(owner = data["owner"], name = data["name"])    
-    db.session.add(workout)
-    
-    exercises = data["exercises"]
-    for element in exercises:
-        exercise = Exercise(description = element["description"], workouts = workout)
-        db.session.add(exercise)
-    
-    db.session.commit()    
-    print(workout.exercises.all())
+    try:
+        data = request.get_json()    
+        
+        workout = Workout(owner = data["owner"], name = data["name"])    
+        db.session.add(workout)
+        
+        exercises = data["exercises"]
+        for element in exercises:
+            exercise = Exercise(description = element["description"], workouts = workout)
+            db.session.add(exercise)
+        
+        db.session.commit()    
+        print(workout.exercises.all())
 
-    json = {
-        'id': workout.id,
-        'owner': workout.owner,
-        'name': workout.name
-    }
+        json = {
+            'id': workout.id,
+            'owner': workout.owner,
+            'name': workout.name
+        }
 
-    response = jsonify(json)
-    response.status_code = 200    
-    
-    return response
+        response = jsonify(json)
+        response.status_code = 200    
+        
+        return response
+    except Exception as error:
+        response = error
+        response.status_code = 500
+        return response
