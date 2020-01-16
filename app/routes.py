@@ -1,4 +1,5 @@
 from app import app, request, jsonify, db
+from app.services import WorkoutService
 from app.models import Workout, Exercise
 
 @app.route('/')
@@ -40,28 +41,9 @@ def add_workout():
 @app.route('/getworkoutfrom/', methods = ['GET'])
 def get_workout_from():
     owner = request.args.get('owner')
-    if owner is not None and owner :
-        workouts = Workout.query.outerjoin(Workout.exercises).filter(owner == owner).all()
-        data = []    
-        for workout in workouts:
-            dict_workout = {
-                'id': workout.id,
-                'owner': workout.owner,
-                'name': workout.name        
-            }
-
-            exercises = list()        
-            for exercise in workout.exercises:
-                dict_exercise = {
-                    'id': exercise.id,
-                    'description': exercise.description                
-                }
-                exercises.append(dict_exercise)
-            
-            dict_workout['exercises'] = exercises
-            data.append(dict_workout)
-        
-        response = jsonify(data)
+    if owner is not None and owner :       
+        service = WorkoutService()
+        response = jsonify(service.get_workout_from(owner))
         response.status_code = 200
         return response
     else:    
