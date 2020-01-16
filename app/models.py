@@ -9,6 +9,14 @@ class Workout(db.Model):
     def __repr__(self):
         return '<Workout {} {} {}>'.format(self.id, self.owner, self.name)
 
+    def to_json(self):
+        return {            
+            'id': self.id,
+            'owner': self.owner,
+            'name': self.name,
+            'exercises': list()
+        }
+
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     description = db.Column(db.String(100))
@@ -16,3 +24,6 @@ class Exercise(db.Model):
 
     def __repr__(self):
         return '<Exercise {} {}>'.format(self.id, self.description)
+    
+    def to_dictionary(self):
+        return { 'id': self.id, 'description': self.description }
