@@ -4,7 +4,7 @@ from app.models import Workout, Exercise
 
 class WorkoutService(object):
     def get_workout_from(self, owner):
-        workouts = Workout.query.filter_by(owner=owner).outerjoin(Workout.exercises).all()
+        workouts = Workout.query.outerjoin(Workout.exercises).filter(Workout.owner == owner).all()
         data = []
         for workout in workouts:
             dict_workout = {
@@ -14,12 +14,8 @@ class WorkoutService(object):
             }
 
             exercises = list()
-            for exercise in workout.exercises:
-                dict_exercise = {
-                    'id': exercise.id,
-                    'description': exercise.description
-                }
-                exercises.append(dict_exercise)
+            for exercise in workout.exercises: 
+                exercises.append(exercise.to_dictionary())
 
             dict_workout['exercises'] = exercises
             data.append(dict_workout)
