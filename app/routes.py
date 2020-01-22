@@ -13,7 +13,6 @@ def helloworld():
 def add_workout():
     try:
         data = request.get_json()
-
         if ('owner' in data) and ('name' in data) and ('exercises' in data):            
             service = WorkoutService()
             response = jsonify(service.add_workout(data))
@@ -38,3 +37,14 @@ def get_workout_from():
         return response
     else:
         return 'Bad request. Need to informe owner of the workout', 400
+
+@app.route('/getallexercises', methods=['GET'])
+def get_exercises_from_workout():
+    workout_id = request.args.get('id')
+    if workout_id is not None and workout_id:
+        service = WorkoutService()
+        response = jsonify(service.get_exercises_from_workout(workout_id))
+        response.status_code = 200
+        return response
+    else:
+        return 'Bad request. Nedd to informe workout id to get all exercises', 400

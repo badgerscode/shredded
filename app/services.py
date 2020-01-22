@@ -40,4 +40,15 @@ class WorkoutService(object):
         }
 
         return json
-    
+
+    def get_exercises_from_workout(self, workout_id):
+        workout = Workout.query.filter(Workout.id == workout_id).first()
+        if workout:
+            exercises = workout.exercises.all()
+            json = []
+            for exercise in exercises:
+                json.append(exercise.to_dictionary())
+            
+            return json
+        else:
+            return []
